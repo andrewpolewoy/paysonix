@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: signature-service
+
+server:
+  port: 8080
+
+app:
+  security:
+    token: ${SECURITY_TOKEN:test-token}
+    signature:
+      secret: ${SIGNATURE_SECRET:your-secret-key}
+
+logging:
+  level:
+    root: INFO
+    com.paysonix: DEBUG
+    org.springframework.web: INFO 

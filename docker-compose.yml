@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  signature-service:
+    build: .
+    container_name: signature-service
+    ports:
+      - "8080:8080"
+    environment:
+      - APP_TOKEN=your-secure-token
+      - SIGNATURE_SECRET=your-signature-secret-key
+      - SPRING_PROFILES_ACTIVE=prod
+    restart: unless-stopped
+    # Конфигурация для мониторинга здоровья сервиса
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s 
