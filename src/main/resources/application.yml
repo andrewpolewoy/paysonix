@@ -5,14 +5,38 @@ spring:
 server:
   port: 8080
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+    info:
+      enabled: true
+
 app:
   security:
-    token: ${SECURITY_TOKEN:test-token}
+    token: ${APP_TOKEN:test-token}
     signature:
-      secret: ${SIGNATURE_SECRET:your-secret-key}
+      secret: ${SIGNATURE_SECRET:test-secret}
 
 logging:
   level:
     root: INFO
     com.paysonix: DEBUG
-    org.springframework.web: INFO 
+    org.springframework.web: INFO
+
+info:
+  app:
+    name: Signature Service
+    description: Service for generating HMAC SHA256 signatures from form parameters
+    version: 0.0.1-SNAPSHOT
+    java:
+      version: ${java.version}
+  build:
+    artifact: ${project.artifactId}
+    name: ${project.name}
+    version: ${project.version}
+    time: ${build.time} 

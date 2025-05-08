@@ -82,10 +82,51 @@ param1=value1&param2=value2
 
 ## Тестирование
 
-Запуск тестов:
+### Запуск тестов
 ```bash
 ./mvnw test
 ```
+
+### Тестирование через curl
+
+1. Успешный запрос с правильным токеном:
+```bash
+curl -X POST "http://localhost:8080/api/v1/signature/test" \
+  -H "Token: test-token" \
+  -d "param1=value1&param2=value2" \
+  -v
+```
+
+2. Запрос с неправильным токеном:
+```bash
+curl -X POST "http://localhost:8080/api/v1/signature/test" \
+  -H "Token: wrong-token" \
+  -d "param1=value1&param2=value2" \
+  -v
+```
+
+3. Запрос без токена:
+```bash
+curl -X POST "http://localhost:8080/api/v1/signature/test" \
+  -d "param1=value1&param2=value2" \
+  -v
+```
+
+4. Проверка здоровья приложения:
+```bash
+curl http://localhost:8080/actuator/health
+```
+
+5. Получение информации о приложении:
+```bash
+curl http://localhost:8080/actuator/info
+```
+
+Ожидаемые ответы:
+- Успешный запрос: HTTP 200 с JSON-ответом, содержащим подпись
+- Неправильный токен: HTTP 403 Forbidden
+- Отсутствие токена: HTTP 403 Forbidden
+- Health check: HTTP 200 с информацией о состоянии приложения
 
 ## Безопасность
 
